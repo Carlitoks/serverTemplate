@@ -1,6 +1,5 @@
 "use strict";
 
-let debug = require('debug')('DB:universalModel');
 let mysql = require('mysql');
 
 let pool = null;
@@ -68,7 +67,6 @@ module.exports = class db {
 			
 			let querystring = where !== '' ? `SELECT ${columns} FROM ${table} WHERE ${where} ${limit} ${from} ${ordercolum} ${order}` : `SELECT ${columns} FROM ${table} ${limit} ${from} ${ordercolum} ${order}`;
 			
-			debug(querystring);
 			query(querystring, (err, data) => callback(err, data) );
 		}
 
