@@ -1,0 +1,9 @@
+{
+    "sessionSecret": "",
+    "dbConfig": {
+        "host": "",
+        "user": "",
+        "password": "",
+        "database": ""
+    }
+}
