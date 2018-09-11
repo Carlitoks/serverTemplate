@@ -1,9 +1,9 @@
 {
     "sessionSecret": "",
     "dbConfig": {
-        "host": "",
-        "user": "",
-        "password": "",
-        "database": ""
+        "host": "162.252.57.117",
+        "user": "corekdefatult",
+        "password": "3upavaguz",
+        "database": "zadmin_corekdefault"
     }
 }

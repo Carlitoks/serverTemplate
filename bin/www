@@ -38,33 +38,6 @@ server.on('listening', onListening);
 const io = require('socket.io')(server);
 
 /**
- * Session storagefor passport.socketio.
- * MUST BE THE SAME on app.js
- */
-
-let
-  session = require('express-session'),
-  MySQLStore = require('connect-mysql')(session);
-
-/**
- * Access passport.js user information from a socket.io connection.
- */
-
-let passportSocketIo = require("passport.socketio");
-
-//With Socket.io >= 1.0
-io.use(passportSocketIo.authorize({
-  cookieParser: require('cookie-parser'), // the same middleware you registrer in express
-  key: 'connect.id', // the name of the cookie where express/connect stores its session_id
-  secret: 'session_secret', // the session_secret to parse the cookie
-  store: new MySQLStore({
-    config: config.get('dbConfig')
-  }), // we NEED to use a sessionstore. no memorystore please
-  success: onAuthorizeSuccess, // *optional* callback on success - read more below
-  fail: onAuthorizeFail, // *optional* callback on fail/error - read more below
-}));
-
-/**
  * Socket.io function import.
  */
 
@@ -126,30 +99,4 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
-}
-
-/**
- * Callback for socket Authorize Success.
- */
-
-function onAuthorizeSuccess(data, accept) {
-  debug('successful connection to socket.io');
-
-  // The accept-callback still allows us to decide whether to
-  // accept the connection or not.
-  accept(null, true);
-
-}
-
-/**
- * Callback for socket Authorize Fail.
- */
-
-function onAuthorizeFail(data, message, error, accept) {
-  if (error)
-    throw new Error(message);
-  debug('failed connection to socket.io:', message);
-
-  // We use this callback to log all of our failed connections.
-  accept(null, false);
 }

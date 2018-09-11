@@ -5,14 +5,8 @@ const
   express = require('express'),
   favicon = require('serve-favicon'),
   bodyParser = require('body-parser'),
-  cookieParser = require('cookie-parser'),
   fileUpload = require('express-fileupload');
   
-// Session Storage
-let
-  session = require('express-session'),
-  MySQLStore = require('connect-mysql')(session);
-
 // HTTP routes  to be imported here
 let api = require('./routes/http/api');
 
@@ -24,15 +18,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'})); 
 app.use(express.static(path.join(__dirname, 'dist')));
-
-app.use(cookieParser());
-app.use(session({
-  key: 'connect.id',
-  secret: config.get('sessionSecret'),
-  store: new MySQLStore({config: config.get('dbConfig')}),
-  resave: false,
-  saveUninitialized: false
-}));
 
 // Point static path to dist
 app.use('/', express.static(path.join(__dirname, 'static')));
